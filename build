@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+mkdir -p dist
+echo "build src/ctrlz.ls -> dist/ctrlz.js ..."
+./node_modules/.bin/lsc -cbp src/ctrlz.ls > dist/ctrlz.js
+browserify dist/ctrlz.js > dist/ctrlz.bundle.js
+echo "minifying ctrlz.js ..."
+./node_modules/.bin/uglifyjs dist/ctrlz.js > dist/ctrlz.min.js
+echo "deploy into local web ..."
+mkdir -p web/static/assets/lib/ctrlz/
+cp -R dist/* web/static/assets/lib/ctrlz/
+echo "done."
+
