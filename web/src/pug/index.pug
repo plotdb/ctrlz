@@ -35,8 +35,9 @@ html
     +script("assets/lib/ldui/ldui.min.js")
     +script("assets/lib/md2json/md2json.min.js")
     +script("assets/lib/marked/marked.min.js")
-    +script("assets/lib/ctrlz/ctrlz.bundle.js")
+    +script("assets/lib/ctrlz/ctrlz.bundle.min.js")
     script: :lsc
+      window.ot-json0 = require("ot-json0")
       lc = {json: {}, text: ""}
       md = require("md-2-json")
       hist = new ctrlz!
