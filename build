@@ -13,10 +13,10 @@ echo " - ot-json0 ... "
   -g unassertify \
   -g envify \
   -g uglifyify \
-# common-shakeify breaks this module, so remove it.
-#  -p common-shakeify \
   -p browser-pack-flat/plugin \
   -r ot-json0 | ./node_modules/.bin/uglifyjs > dist/ot-json0.js
+# common-shakeify breaks this module, so remove it.
+#  -p common-shakeify \
 
 echo " - json0-ot-diff ... "
 ./node_modules/.bin/browserify -p tinyify -r json0-ot-diff | buble | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
