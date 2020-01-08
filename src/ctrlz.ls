@@ -22,6 +22,23 @@ require! <[ot-json0 json0-ot-diff diff-match-patch]>
       @cur = ot-json0.type.apply @cur, op
       return {obj: @cur, op: op}
 
+    # assume we have ops : A1 B1 C2 D2 from user1 and user2, and now user1 want to undo ( B1 ).
+    # we apply B1' which is t(t(i(B1),C2),D2)
+    # reference: https://groups.google.com/forum/m/#!msg/sharejs/NWIBe3Ao-KA/BKipNAVGAwAJ
+    #
+    # we keep 2 arrays: undo, redo.
+    # - every direct action can be undo, is put in undo.
+    # - every undo action is put in redo.
+    # e.g., say user1 fires 3 ops: A,B,C, now we have:
+    #   undo: [A,B,C], redo: []
+    # now, we undo C:
+    #   undo: [A,B], redo: [C']
+    # now, we undo B:
+    #   undo: [A], redo: [C', B']
+    # now we redo B:
+    #   undo: [A,B''], redo: [C']
+    # when user execute new op, redo is clear immediately:
+    #   undo: [A,B'',D], redo: []
     undo: ->
       opo = @stack.undo.pop!
       if !opo => return {obj: @cur, op: null}
