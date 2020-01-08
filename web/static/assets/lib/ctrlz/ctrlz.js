@@ -8,58 +8,119 @@ diffMatchPatch = require('diff-match-patch');
   ctrlz = function(opt){
     opt == null && (opt = {});
     this.cur = opt.obj || {};
-    this.idx = 0;
-    this.stack = [];
+    this.stack = {
+      all: [],
+      undo: [],
+      redo: []
+    };
     return this;
   };
   ctrlz.prototype = import$(Object.create(Object.prototype), {
+    get: function(){
+      return this.cur;
+    },
     clear: function(){
-      this.idx = 0;
-      return this.stack.splice(0);
+      var this$ = this;
+      return ['all', 'undo', 'redo'].map(function(it){
+        return this$.stack[it].splice(0);
+      });
     },
     reset: function(arg$){
       var obj;
       obj = arg$.obj;
-      return this.cur = obj, this.idx = 0, this.stack = [], this;
+      this.cur = obj;
+      return this.clear();
     },
-    update: function(obj){
+    update: function(obj, src){
+      src == null && (src = true);
       return this.apply({
-        obj: obj
+        obj: obj,
+        src: src
       });
     },
     apply: function(arg$){
-      var obj, op;
-      obj = arg$.obj, op = arg$.op;
+      var obj, op, src, opo;
+      obj = arg$.obj, op = arg$.op, src = arg$.src;
+      src = src != null ? src : true;
       if (!op && obj) {
         op = json0OtDiff(this.cur, obj, diffMatchPatch);
       }
-      if (this.idx < this.stack.length - 1) {
-        this.stack.splice(this.idx);
+      if (!op.length) {
+        return {
+          obj: this.cur,
+          op: null
+        };
       }
-      this.stack.push(op);
+      opo = {
+        op: op,
+        src: src
+      };
+      this.stack.all.push(opo);
+      if (src) {
+        this.stack.redo.splice(0);
+        this.stack.undo.push(opo);
+      }
       this.cur = otJson0.type.apply(this.cur, op);
-      this.idx = this.stack.length - 1;
-      return this.cur;
+      return {
+        obj: this.cur,
+        op: op
+      };
     },
     undo: function(){
-      var op;
-      if (this.idx === -1) {
-        return this.cur;
+      var opo, idx, op, i$, to$, i;
+      opo = this.stack.undo.pop();
+      if (!opo) {
+        return {
+          obj: this.cur,
+          op: null
+        };
       }
-      op = this.stack[this.idx];
-      this.cur = otJson0.type.apply(this.cur, otJson0.type.invert(op));
-      this.idx--;
-      return this.cur;
+      idx = this.stack.all.indexOf(opo);
+      op = otJson0.type.invert(opo.op);
+      for (i$ = idx + 1, to$ = this.stack.all.length; i$ < to$; ++i$) {
+        i = i$;
+        op = otJson0.type.transform(op, this.stack.all[i].op, 'left');
+      }
+      this.cur = otJson0.type.apply(this.cur, op);
+      opo = {
+        op: op,
+        src: true
+      };
+      this.stack.all.push(opo);
+      this.stack.redo.push(opo);
+      return {
+        obj: this.cur,
+        op: op
+      };
     },
     redo: function(){
-      var op;
-      if (this.idx >= this.stack.length - 1) {
-        return this.cur;
+      var opo, idx, op, i$, to$, i;
+      opo = this.stack.redo.pop();
+      if (!opo) {
+        return {
+          obj: this.cur,
+          op: null
+        };
       }
-      this.idx++;
-      op = this.stack[this.idx];
+      idx = this.stack.all.indexOf(opo);
+      op = otJson0.type.invert(opo.op);
+      for (i$ = idx + 1, to$ = this.stack.all.length; i$ < to$; ++i$) {
+        i = i$;
+        if (!this.stack.all[i].src) {
+          op = otJson0.type.transform(op, this.stack.all[i].op, 'left');
+        }
+      }
       this.cur = otJson0.type.apply(this.cur, op);
-      return this.cur;
+      opo = {
+        op: op,
+        src: true
+      };
+      this.stack.all.push(opo);
+      this.stack.undo.push(opo);
+      return {
+        obj: this.cur,
+        op: op
+      };
     }
   });
   if (typeof module != 'undefined' && module !== null) {
