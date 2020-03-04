@@ -67,7 +67,7 @@ diffMatchPatch = require('diff-match-patch');
       };
     },
     undo: function(){
-      var opo, idx, op, i$, to$, i;
+      var opo, idx, op;
       opo = this.stack.undo.pop();
       if (!opo) {
         return {
@@ -77,10 +77,6 @@ diffMatchPatch = require('diff-match-patch');
       }
       idx = this.stack.all.indexOf(opo);
       op = otJson0.type.invert(opo.op);
-      for (i$ = this.stack.all.length - 1, to$ = idx + 1; i$ >= to$; --i$) {
-        i = i$;
-        op = otJson0.type.transform(op, this.stack.all[i].op, 'left');
-      }
       this.cur = otJson0.type.apply(this.cur, op);
       opo = {
         op: op,
@@ -94,7 +90,7 @@ diffMatchPatch = require('diff-match-patch');
       };
     },
     redo: function(){
-      var opo, idx, op, i$, to$, i;
+      var opo, idx, op;
       opo = this.stack.redo.pop();
       if (!opo) {
         return {
@@ -104,12 +100,6 @@ diffMatchPatch = require('diff-match-patch');
       }
       idx = this.stack.all.indexOf(opo);
       op = otJson0.type.invert(opo.op);
-      for (i$ = idx + 1, to$ = this.stack.all.length; i$ < to$; ++i$) {
-        i = i$;
-        if (!this.stack.all[i].src) {
-          op = otJson0.type.transform(op, this.stack.all[i].op, 'left');
-        }
-      }
       this.cur = otJson0.type.apply(this.cur, op);
       opo = {
         op: op,
