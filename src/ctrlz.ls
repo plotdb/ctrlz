@@ -44,7 +44,7 @@ require! <[ot-json0 json0-ot-diff diff-match-patch]>
       if !opo => return {obj: @cur, op: null}
       idx = @stack.all.indexOf(opo)
       op = ot-json0.type.invert opo.op
-      for i from idx + 1 til @stack.all.length =>
+      for i from @stack.all.length - 1 to idx + 1 by -1 =>
         op = ot-json0.type.transform op, @stack.all[i].op, \left
       @cur = ot-json0.type.apply @cur, op
       opo = {op, src: true}

@@ -77,7 +77,7 @@ diffMatchPatch = require('diff-match-patch');
       }
       idx = this.stack.all.indexOf(opo);
       op = otJson0.type.invert(opo.op);
-      for (i$ = idx + 1, to$ = this.stack.all.length; i$ < to$; ++i$) {
+      for (i$ = this.stack.all.length - 1, to$ = idx + 1; i$ >= to$; --i$) {
         i = i$;
         op = otJson0.type.transform(op, this.stack.all[i].op, 'left');
       }
