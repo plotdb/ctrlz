@@ -10,7 +10,9 @@ echo "minifying ctrlz.js ..."
 
 
 if [ "$1" != "fast" ]; then
+
   echo "bundling required modules into dist/module.js..."
+
   echo " - ot-json0 ... "
   ./node_modules/.bin/browserify \
     -g unassertify \
@@ -22,10 +24,31 @@ if [ "$1" != "fast" ]; then
   #  -p common-shakeify \
 
   echo " - json0-ot-diff ... "
-  ./node_modules/.bin/browserify -p tinyify -r json0-ot-diff | buble | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
+  ./node_modules/.bin/browserify \
+    -p tinyify -r json0-ot-diff | buble | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
 
   echo " - diff-match-patch ... "
-  ./node_modules/.bin/browserify -p tinyify -r diff-match-patch | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
+  ./node_modules/.bin/browserify \
+    -p tinyify -r diff-match-patch | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
+
+  echo " - ot-json0 ( standalone ) ... "
+  ./node_modules/.bin/browserify \
+    --standalone otJson0 \
+    -g unassertify \
+    -g envify \
+    -g uglifyify \
+    -p browser-pack-flat/plugin \
+    -r ot-json0 | ./node_modules/.bin/uglifyjs > dist/ot-json0.standalone.js
+  # common-shakeify breaks this module, so remove it.
+  #  -p common-shakeify \
+
+  echo " - json0-ot-diff ( standalone ) ... "
+  ./node_modules/.bin/browserify --standalone json0OtDiff \
+    -p tinyify -r json0-ot-diff | buble | ./node_modules/.bin/uglifyjs >> dist/ot-json0.standalone.js
+
+  echo " - diff-match-patch ( standalone ) ... "
+  ./node_modules/.bin/browserify --standalone diffMatchPatch \
+    -p tinyify -r diff-match-patch | ./node_modules/.bin/uglifyjs >> dist/ot-json0.standalone.js
 
   # for discify analysis
   ./node_modules/.bin/browserify --full-paths -s otJson0 -r ot-json0 | ./node_modules/.bin/uglifyjs | discify > web/static/ot-json0.html
