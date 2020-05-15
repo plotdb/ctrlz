@@ -39,6 +39,12 @@ include required js file:
 ```
 
 
+## Bundle File
+
+ctrlz depends on `ot-json0` and `json0-ot-diff`. Related code are bundled and shipped alone with ctrlz, in both standalone and requireJS format.
+
+
+
 ## License
 
 MIT.
