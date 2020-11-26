@@ -50,5 +50,8 @@
       "@loadingio/ldquery",
       "ldview"
     ]
+  },
+  "dependencies": {
+    "deploy": "github:zbryikt/deploy"
   }
 }
