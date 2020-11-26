@@ -144,9 +144,9 @@ pug_html = pug_html + "\u003Ca class=\"btn btn-outline-secondary mr-2\" href=\"h
 ;pug_debug_line = 27;pug_debug_filename = "src\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "ctrlz.js ( unbundled )\u003C\u002Fa\u003E";
 ;pug_debug_line = 28;pug_debug_filename = "src\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "\u003Ca class=\"btn btn-outline-secondary mr-2\" href=\"https:\u002F\u002Fraw.githubusercontent.com\u002Fplotdb\u002Fctrlz\u002Fmaster\u002Fdist\u002Fot-json0.js\"\u003E";
+pug_html = pug_html + "\u003Ca class=\"btn btn-outline-secondary mr-2\" href=\"https:\u002F\u002Fgithub.com\u002Fplotdb\u002Fjson0\"\u003E";
 ;pug_debug_line = 28;pug_debug_filename = "src\u002Fpug\u002Findex.pug";
-pug_html = pug_html + "ot-json modules\u003C\u002Fa\u003E";
+pug_html = pug_html + "@plotdb\u002Fjson0 modules\u003C\u002Fa\u003E";
 ;pug_debug_line = 29;pug_debug_filename = "src\u002Fpug\u002Findex.pug";
 pug_html = pug_html + "\u003Ca class=\"btn btn-outline-secondary\" href=\"https:\u002F\u002Fgithub.com\u002Fplotdb\u002Fctrlz\"\u003E";
 ;pug_debug_line = 29;pug_debug_filename = "src\u002Fpug\u002Findex.pug";
