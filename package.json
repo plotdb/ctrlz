@@ -3,7 +3,7 @@
   "name": "ctrlz",
   "license": "MIT",
   "description": "JSON Edit History Manager for Undo / Redo Functionality",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "files": [
     "dist/**/*"
   ],
