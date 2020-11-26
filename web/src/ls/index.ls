@@ -17,7 +17,6 @@
   submit = (op) ->
     if lc.doc and op => lc.doc.submitOp op
 
-  window.ot-json0 = require("ot-json0")
   lc = {json: {}, text: ""}
   md = require("md-2-json")
   hist = new ctrlz!

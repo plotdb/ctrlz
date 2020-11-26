@@ -1,9 +1,9 @@
 doctype html
 html
-  include /../../static/assets/lib/ldui/pug/ldui.pug
+  include /../../static/assets/lib/bootstrap.ldui/main/index.pug
   head
     +css("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
-    +css("assets/lib/ldui/ldui.min.css")
+    +css("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
     style: :stylus
       html,body { width: 100%; height: 100%; padding: 0; margin: 0 }
       .scroll { overflow-y: scroll }
@@ -36,9 +36,11 @@ html
               include sample.md
           .w-100.h-50.pt-3: .w-100.h-100.scroll.p-4.border.shadow-sm.rounded.bg-light(ld="json")
 
-    +script("assets/lib/ldui/ldui.min.js")
+    +script("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.js")
+    +script("assets/lib/@loadingio/ldquery/main/ldq.min.js")
+    +script("assets/lib/ldview/main/ldview.min.js")
     +script("assets/lib/md2json/md2json.min.js")
     +script("assets/lib/marked/marked.min.js")
-    +script("assets/lib/ctrlz/ctrlz.bundle.min.js")
+    +script("assets/lib/ctrlz/dev/ctrlz.bundle.min.js")
     +script("assets/lib/sharedb-wrapper/client.bundle.min.js")
     +script("js/index.js")

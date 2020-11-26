@@ -1,48 +1,19 @@
 #!/usr/bin/env bash
+
+rm -rf dist
 mkdir -p dist
-if [ "$1" != "fast" ]; then
-  rm dist/*
-fi
 echo "build src/ctrlz.ls -> dist/ctrlz.js ..."
-./node_modules/.bin/lsc -cbp src/ctrlz.ls > dist/ctrlz.js
+npx lsc -cp src/ctrlz.ls > dist/ctrlz.js
 echo "minifying ctrlz.js ..."
-./node_modules/.bin/uglifyjs dist/ctrlz.js > dist/ctrlz.min.js
+npx uglifyjs dist/ctrlz.js > dist/ctrlz.min.js
 
-
-if [ "$1" != "fast" ]; then
-
-  echo "bundling required modules into dist/module.js..."
-
-  echo " - ot-json0 ... "
-  ./node_modules/.bin/browserify \
-    -g unassertify \
-    -g envify \
-    -g uglifyify \
-    -p browser-pack-flat/plugin \
-    -r ot-json0 | ./node_modules/.bin/uglifyjs > dist/ot-json0.js
-  # common-shakeify breaks this module, so remove it.
-  #  -p common-shakeify \
-
-  echo " - json0-ot-diff ... "
-  ./node_modules/.bin/browserify \
-    -p tinyify -r json0-ot-diff | buble | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
-
-  echo " - diff-match-patch ... "
-  ./node_modules/.bin/browserify \
-    -p tinyify -r diff-match-patch | ./node_modules/.bin/uglifyjs >> dist/ot-json0.js
-
-  # for discify analysis
-  ./node_modules/.bin/browserify --full-paths -s otJson0 -r ot-json0 | ./node_modules/.bin/uglifyjs | discify > web/static/ot-json0.html
-  ./node_modules/.bin/browserify --full-paths -s json0OtDiff -r json0-ot-diff | buble | ./node_modules/.bin/uglifyjs | discify > web/static/json0-ot-diff.html
-  ./node_modules/.bin/browserify --full-paths -s diffMatchPatch -r diff-match-patch | ./node_modules/.bin/uglifyjs | discify > web/static/diff-match-patch.html
-
-fi
 
 echo "merge ctrlz and module into ctrlz.bundle.js..."
-cat dist/ot-json0.js dist/ctrlz.min.js > dist/ctrlz.bundle.min.js
+cat node_modules/@plotdb/json0/dist/json0.min.js dist/ctrlz.min.js > dist/ctrlz.bundle.min.js
 
 echo "deploy into local web ..."
-mkdir -p web/static/assets/lib/ctrlz/
-cp -R dist/* web/static/assets/lib/ctrlz/
+rm -rf web/static/assets/lib/ctrlz/dev/
+mkdir -p web/static/assets/lib/ctrlz/dev/
+cp -R dist/* web/static/assets/lib/ctrlz/dev/
 echo "done."
 
