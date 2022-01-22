@@ -2,14 +2,13 @@
 
 rm -rf dist
 mkdir -p dist
-echo "build src/ctrlz.ls -> dist/ctrlz.js ..."
-./node_modules/.bin/lsc -cp --no-header src/ctrlz.ls > dist/ctrlz.js
-echo "minifying ctrlz.js ..."
-./node_modules/.bin/uglifyjs dist/ctrlz.js -m -c > dist/ctrlz.min.js
+echo "build src/ctrlz.ls -> dist/index.js ..."
+./node_modules/.bin/lsc -cp --no-header src/index.ls > dist/index.js
+echo "minifying index.js ..."
+./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 
-
-echo "merge ctrlz and module into ctrlz.bundle.js..."
-cat node_modules/@plotdb/json0/dist/json0.min.js dist/ctrlz.min.js > dist/ctrlz.bundle.min.js
+echo "merge ctrlz and module into index.bundle.js..."
+cat node_modules/@plotdb/json0/dist/json0.min.js dist/index.min.js > dist/ctrlz.bundle.min.js
 
 echo "deploy into local web ..."
 rm -rf web/static/assets/lib/ctrlz/dev/

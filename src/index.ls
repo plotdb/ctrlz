@@ -66,4 +66,4 @@ ctrlz.prototype = Object.create(Object.prototype) <<< do
     return {obj: @cur, op: op}
 
 if module? => module.exports = ctrlz
-if window? => window.ctrlz = ctrlz
+else if window? => window.ctrlz = ctrlz
