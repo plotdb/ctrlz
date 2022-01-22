@@ -3,9 +3,9 @@
 rm -rf dist
 mkdir -p dist
 echo "build src/ctrlz.ls -> dist/ctrlz.js ..."
-npx lsc -cp src/ctrlz.ls > dist/ctrlz.js
+./node_modules/.bin/lsc -cp --no-header src/ctrlz.ls > dist/ctrlz.js
 echo "minifying ctrlz.js ..."
-npx uglifyjs dist/ctrlz.js > dist/ctrlz.min.js
+./node_modules/.bin/uglifyjs dist/ctrlz.js -m -c > dist/ctrlz.min.js
 
 
 echo "merge ctrlz and module into ctrlz.bundle.js..."
