@@ -1,9 +1,9 @@
 doctype html
 html
-  include /../../static/assets/lib/ldui/pug/ldui.pug
+  include @/@loadingio/bootstrap.ext/index.pug
   head
     +css("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
-    +css("assets/lib/ldui/ldui.min.css")
+    +css("assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
     style: :stylus
       html,body { width: 100%; height: 100%; padding: 0; margin: 0 }
       .scroll { overflow-y: scroll }
@@ -35,7 +35,6 @@ html
             textarea.form-control.w-100.h-100.scroll.border.shadow-sm.rounded(ld="text")
           .w-100.h-50.pt-3: .w-100.h-100.scroll.p-4.border.shadow-sm.rounded.bg-light(ld="json")
 
-    +script("assets/lib/ldui/ldui.min.js")
     +script("assets/lib/md2json/md2json.min.js")
     +script("assets/lib/marked/marked.min.js")
     +script("assets/lib/ctrlz/ctrlz.bundle.min.js")
