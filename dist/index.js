@@ -125,8 +125,7 @@
   });
   if (typeof module != 'undefined' && module !== null) {
     module.exports = ctrlz;
-  }
-  if (typeof window != 'undefined' && window !== null) {
+  } else if (typeof window != 'undefined' && window !== null) {
     window.ctrlz = ctrlz;
   }
   function import$(obj, src){

@@ -11,7 +11,7 @@ ctrlz.prototype = Object.create(Object.prototype) <<< do
   reset: ({obj}) -> @cur = obj; @clear!
   update: (obj,src=true) -> @apply {obj,src}
   apply: ({obj, op, src}) ->
-    src = if (src?) => src else true
+    src = if src? => src else true
     if !op and obj => op = json0.diff @cur, obj
     if !op.length => return {obj: @cur, op: null}
     opo = {op, src}
