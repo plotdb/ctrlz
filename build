@@ -8,7 +8,7 @@ echo "minifying index.js ..."
 ./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 
 echo "merge ctrlz and module into index.bundle.js..."
-cat node_modules/@plotdb/json0/dist/json0.min.js dist/index.min.js > dist/ctrlz.bundle.min.js
+cat node_modules/@plotdb/json0/json0.min.js dist/index.min.js > dist/ctrlz.bundle.min.js
 
 echo "deploy into local web ..."
 rm -rf web/static/assets/lib/ctrlz/dev/
