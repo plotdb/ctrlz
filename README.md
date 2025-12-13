@@ -7,9 +7,9 @@ JSON Edit History Manager for Undo / Redo Functionality, powered by operational 
 
 include required js file:
 
-```
+
     <script src="path-to-your-ctrlz-bundle.js"></script>
-```
+
 
 ctrlz uses `@plotdb/json0` as a dependency. `ctrlz.bundle.min.js` already includes it but for a separate file, use `ctrlz.mins.js` instead, and include `@plotdb/json0` separately downloaded from [its repo](https://github.com/plotdb/json0).
 
@@ -17,7 +17,7 @@ ctrlz uses `@plotdb/json0` as a dependency. `ctrlz.bundle.min.js` already includ
 ## Usage
 
 
-```
+
     /* init directly in constructor */
     mananger = new ctrlz({obj: obj});
 
@@ -38,7 +38,7 @@ ctrlz uses `@plotdb/json0` as a dependency. `ctrlz.bundle.min.js` already includ
 
     /* clean history */
     mananger.clear();
-```
+
 
 
 ## License
