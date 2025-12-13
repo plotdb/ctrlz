@@ -1,5 +1,12 @@
 # Change Logs
 
+## v0.2.1
+
+ - upgrade depdencnies
+ - tweak code style
+ - rebuild based on module upgrade
+
+
 ## v0.2.0
 
  - further minimize generated js file with mangling and compression
