@@ -1,14 +1,17 @@
 json0 = if window? and window.json0? => window.json0 else require "json0"
 
 ctrlz = (opt = {}) ->
-  @ <<< cur: (opt.obj or {})
+  @ <<< cur: {}
   @ <<< stack: all: [], undo: [], redo: []
+  @reset opt{obj}
   @
 
 ctrlz.prototype = Object.create(Object.prototype) <<< do
-  get: -> return @cur
+  get: -> JSON.parse JSON.stringify(@cur or {})
   clear: -> <[all undo redo]>.map ~> @stack[it].splice 0
-  reset: ({obj}) -> @cur = obj; @clear!
+  reset: ({obj}) ->
+    @cur = JSON.parse(JSON.stringify(obj or {}))
+    @clear!
   update: (obj,src=true) -> @apply {obj,src}
   apply: ({obj, op, src}) ->
     src = if src? => src else true

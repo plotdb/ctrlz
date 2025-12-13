@@ -5,17 +5,20 @@
     : require("json0");
   ctrlz = function(opt){
     opt == null && (opt = {});
-    this.cur = opt.obj || {};
+    this.cur = {};
     this.stack = {
       all: [],
       undo: [],
       redo: []
     };
+    this.reset({
+      obj: opt.obj
+    });
     return this;
   };
   ctrlz.prototype = import$(Object.create(Object.prototype), {
     get: function(){
-      return this.cur;
+      return JSON.parse(JSON.stringify(this.cur || {}));
     },
     clear: function(){
       var this$ = this;
@@ -26,7 +29,7 @@
     reset: function(arg$){
       var obj;
       obj = arg$.obj;
-      this.cur = obj;
+      this.cur = JSON.parse(JSON.stringify(obj || {}));
       return this.clear();
     },
     update: function(obj, src){

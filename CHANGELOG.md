@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.2.2
+
+ - fix bug: internal object should be cloned when calling get / set
+
+
 ## v0.2.1
 
  - upgrade depdencnies
