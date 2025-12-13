@@ -16,8 +16,6 @@ ctrlz uses `@plotdb/json0` as a dependency. `ctrlz.bundle.min.js` already includ
 
 ## Usage
 
-
-
     /* init directly in constructor */
     mananger = new ctrlz({obj: obj});
 
